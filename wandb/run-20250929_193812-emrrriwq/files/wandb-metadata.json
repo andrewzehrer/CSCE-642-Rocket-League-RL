@@ -1,0 +1,40 @@
+{
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "CPython 3.11.9",
+  "startedAt": "2025-09-30T00:38:12.425170Z",
+  "program": "C:\\Users\\Andrew Zehrer\\OneDrive\\Documents\\13 - 2025 Fall\\CSCE 642\\CSCE-642-Rocket-League-RL\\test.py",
+  "codePath": "test.py",
+  "codePathLocal": "test.py",
+  "git": {
+    "remote": "https://github.com/andrewzehrer/CSCE-642-Rocket-League-RL.git",
+    "commit": "8af9e09f78e991298dcaaebaab24fdd3279ec3fe"
+  },
+  "email": "andrewsoycheese@gmail.com",
+  "root": "C:\\Users\\Andrew Zehrer\\OneDrive\\Documents\\13 - 2025 Fall\\CSCE 642\\CSCE-642-Rocket-League-RL",
+  "host": "APZ_Desktop",
+  "executable": "C:\\Users\\Andrew Zehrer\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+  "cpu_count": 12,
+  "cpu_count_logical": 20,
+  "gpu": "NVIDIA GeForce RTX 3070 Ti",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "999381004288",
+      "used": "969998995456"
+    }
+  },
+  "memory": {
+    "total": "34212798464"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 3070 Ti",
+      "memoryTotal": "8589934592",
+      "cudaCores": 6144,
+      "architecture": "Ampere",
+      "uuid": "GPU-b573d829-c333-07b4-c0be-1e148ccad64d"
+    }
+  ],
+  "cudaVersion": "13.0",
+  "writerId": "pj9pi8jbhhgxjwpn61tkmncj2bi5y0ic"
+}

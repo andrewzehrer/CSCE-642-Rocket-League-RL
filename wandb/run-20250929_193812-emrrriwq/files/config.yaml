@@ -1,0 +1,97 @@
+_wandb:
+    value:
+        cli_version: 0.22.1
+        e:
+            pj9pi8jbhhgxjwpn61tkmncj2bi5y0ic:
+                codePath: test.py
+                codePathLocal: test.py
+                cpu_count: 12
+                cpu_count_logical: 20
+                cudaVersion: "13.0"
+                disk:
+                    /:
+                        total: "999381004288"
+                        used: "969998995456"
+                email: andrewsoycheese@gmail.com
+                executable: C:\Users\Andrew Zehrer\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe
+                git:
+                    commit: 8af9e09f78e991298dcaaebaab24fdd3279ec3fe
+                    remote: https://github.com/andrewzehrer/CSCE-642-Rocket-League-RL.git
+                gpu: NVIDIA GeForce RTX 3070 Ti
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6144
+                      memoryTotal: "8589934592"
+                      name: NVIDIA GeForce RTX 3070 Ti
+                      uuid: GPU-b573d829-c333-07b4-c0be-1e148ccad64d
+                host: APZ_Desktop
+                memory:
+                    total: "34212798464"
+                os: Windows-10-10.0.19045-SP0
+                program: C:\Users\Andrew Zehrer\OneDrive\Documents\13 - 2025 Fall\CSCE 642\CSCE-642-Rocket-League-RL\test.py
+                python: CPython 3.11.9
+                root: C:\Users\Andrew Zehrer\OneDrive\Documents\13 - 2025 Fall\CSCE 642\CSCE-642-Rocket-League-RL
+                startedAt: "2025-09-30T00:38:12.425170Z"
+                writerId: pj9pi8jbhhgxjwpn61tkmncj2bi5y0ic
+        m: []
+        python_version: 3.11.9
+        t:
+            "1":
+                - 1
+            "2":
+                - 1
+            "3":
+                - 2
+                - 13
+                - 16
+            "4": 3.11.9
+            "5": 0.22.1
+            "8":
+                - 3
+            "10":
+                - 20
+            "12": 0.22.1
+            "13": windows-amd64
+critic_layer_sizes:
+    value:
+        - 512
+        - 512
+critic_lr:
+    value: 5e-05
+exp_buffer_size:
+    value: 150000
+gae_gamma:
+    value: 0.99
+gae_lambda:
+    value: 0.95
+min_inference_size:
+    value: 7
+n_proc:
+    value: 8
+policy_layer_sizes:
+    value:
+        - 512
+        - 512
+policy_lr:
+    value: 5e-05
+ppo_batch_size:
+    value: 50000
+ppo_clip_range:
+    value: 0.2
+ppo_ent_coef:
+    value: 0.01
+ppo_epochs:
+    value: 1
+ppo_minibatch_size:
+    value: 50000
+shm_buffer_size:
+    value: 8192
+standardize_obs:
+    value: false
+standardize_returns:
+    value: true
+timestep_limit:
+    value: 1000000000
+ts_per_iteration:
+    value: 50000
