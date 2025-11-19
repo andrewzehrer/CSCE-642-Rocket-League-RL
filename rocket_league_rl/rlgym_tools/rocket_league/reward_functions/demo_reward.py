@@ -5,6 +5,7 @@ from rlgym.api import RewardFunction, AgentID
 from rlgym.rocket_league.api import GameState
 from rlgym.rocket_league.common_values import CAR_MAX_SPEED
 
+# Demo short for Demolition
 
 class DemoReward(RewardFunction[AgentID, GameState, float]):
     def __init__(self, attacker_reward: float = 1.0, victim_punishment: float = 1.0,

@@ -13,15 +13,14 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
         - Optional acceleration reward
     """
 
-    COOLDOWN_SECONDS = 0.5
-
     def __init__(
             self, 
             touch_reward: float = 1.0, 
             acceleration_reward: float = 0.0, 
             good_touch_reward: float = 5.0, 
             use_touch_count: bool = True, 
-            tick_rate: float = 120.0
+            tick_rate: float = 120.0,
+            cooldown_seconds: float = 0.5
         ):
 
         self.use_touch_count = use_touch_count
@@ -29,6 +28,7 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
         self.acceleration_reward = acceleration_reward
         self.good_touch_reward = good_touch_reward
         self.tick_rate = tick_rate  # RLgym sim steps per second
+        self.cooldown_seconds = cooldown_seconds
 
         self.prev_ball = None
         self.last_touches = {}      # last touch count per agent
@@ -66,7 +66,7 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
             last_touch_frame = self.last_touch_frame.get(agent, -9999)
 
             # --- Check if this touch is new and outside cooldown ---
-            if touches > last_touch_count and (self.frame - last_touch_frame) >= self.COOLDOWN_SECONDS * self.tick_rate:
+            if touches > last_touch_count and (self.frame - last_touch_frame) >= self.cooldown_seconds * self.tick_rate:
                 # Touch reward
                 if touches == 1:
                     rewards[agent] += 8.0

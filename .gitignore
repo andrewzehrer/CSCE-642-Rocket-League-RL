@@ -1,1 +1,4 @@
 /wandb
+/scripts/__pycache__
+/rocket_league_rl/rlgym_tools/rocket_league/reward_functions/__pycache__
+/data/checkpoints

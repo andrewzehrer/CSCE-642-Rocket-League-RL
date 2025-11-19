@@ -8,13 +8,11 @@ def build_rlgym_v2_env():
     from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
     from rlgym.rocket_league import common_values
     from rlgym_ppo.util import RLGymV2GymWrapper
-
-    # Custom reward logic
-    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
-
     import numpy as np
-    
-    # World settings
+
+    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
+    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.boost_change_reward import BoostChangeReward
+
     spawn_opponents = False
     team_size = 1
     blue_team_size = team_size
@@ -23,39 +21,24 @@ def build_rlgym_v2_env():
     no_touch_timeout_seconds = 30
     game_timeout_seconds = 300
 
-    # Define actions and end conditions
     action_parser = RepeatAction(LookupTableAction(), repeats=action_repeat)
     termination_condition = GoalCondition()
     truncation_condition = AnyCondition(NoTouchTimeoutCondition(timeout_seconds=no_touch_timeout_seconds), TimeoutCondition(timeout_seconds=game_timeout_seconds))
 
-    # Reward example
-    reward_fn = CombinedReward((GoalReward(), 10), (TouchReward(), 0.1))
-    
-    # Actual reward
-    one_v_zero_reward_fn = CombinedReward(
-        # (Action, Reward)
-        (AdvancedTouchReward(touch_reward=1.0), 1.0), # +8 First touch in the episode, +4 subsequent touches, +5 Good touch (ball speed inc towards opp goal)
-        (), # +1 Pick up boost
-        (), # +0.1 Using boost
-        (), # -0.01 Time penalty
-    )
-    
-    obs_builder = DefaultObs(
-        zero_padding=None,
-        pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
-        ang_coef=1 / np.pi,
-        lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
-        ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
-        boost_coef=1 / 100.0
+    reward_fn = CombinedReward(
+        AdvancedTouchReward(touch_reward=1.0, good_touch_reward=2.0, acceleration_reward=0.0),
+        BoostChangeReward(gain_weight=0.5, lose_weight=-0.1)
     )
 
-    state_mutator = MutatorSequence(
-        FixedTeamSizeMutator(
-            blue_size=blue_team_size,
-            orange_size=orange_team_size
-        ), KickoffMutator()
-    )
+    obs_builder = DefaultObs(zero_padding=None,
+                             pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
+                             ang_coef=1 / np.pi,
+                             lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
+                             ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
+                             boost_coef=1 / 100.0,)
 
+    state_mutator = MutatorSequence(FixedTeamSizeMutator(blue_size=blue_team_size, orange_size=orange_team_size),
+                                    KickoffMutator())
     rlgym_env = RLGym(
         state_mutator=state_mutator,
         obs_builder=obs_builder,
@@ -63,8 +46,9 @@ def build_rlgym_v2_env():
         reward_fn=reward_fn,
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
-        transition_engine=RocketSimEngine()
-    )
+        transition_engine=RocketSimEngine())
+    
+    print(rlgym_env.observation_space)
 
     return RLGymV2GymWrapper(rlgym_env)
 
@@ -79,6 +63,8 @@ if __name__ == "__main__":
 
     learner = Learner(
         build_rlgym_v2_env,
+        wandb_run_name="learn_to_hit_ball",
+        checkpoint_load_folder=None,
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=None,
@@ -94,9 +80,7 @@ if __name__ == "__main__":
         ppo_epochs=1,   # number of PPO epochs
         standardize_returns=True,
         standardize_obs=False,
-        save_every_ts=1_000_000, # save every 1M steps
-        timestep_limit=1_000_000_000, # Train for 1B steps
-        log_to_wandb=True
-    )
-
+        save_every_ts=200_000, # save every 200K steps
+        timestep_limit=2_000_000, # Train for 2M steps
+        log_to_wandb=True)
     learner.learn()
