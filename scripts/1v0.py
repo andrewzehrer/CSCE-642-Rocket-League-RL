@@ -8,9 +8,11 @@ def build_rlgym_v2_env():
     from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
     from rlgym.rocket_league import common_values
     from rlgym_ppo.util import RLGymV2GymWrapper
+
+    from rocket_league_rl.rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward, TouchScaler
+
     import numpy as np
     
-
     # World settings
     spawn_opponents = False
     team_size = 1
@@ -27,7 +29,14 @@ def build_rlgym_v2_env():
 
     # Define reward function
     reward_fn = CombinedReward((GoalReward(), 10), (TouchReward(), 0.1))
-    dummy_reward_fn = AdvancedTouchReward()
+    one_v_zero_reward_fn = CombinedReward(
+        # (Action, Reward)
+        (TouchScaler(AdvancedTouchReward(touch_reward=1.0)), 1.0), # +8 First touch in the episode, +4 subsequent touches 
+        (), # +5 Good touch (ball speed inc towards opp goal)
+        (), # +1 Pick up boost
+        (), # +0.1 Using boost
+        (), # -0.01 Time penalty
+    )
     
     obs_builder = DefaultObs(zero_padding=None,
                              pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),

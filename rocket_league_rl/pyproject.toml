@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rocket-league-rl"
+version = "0.1.0"
+description = "Rocket League Deep Reinforcement Learning training framework built on RLGym"
+readme = "README.md"
+authors = [
+    { name="Andrew Zehrer", email="andrewzehrer@tamu.edu" },
+    { name="Mrunmay Deshmukh", email="mrunmayd@tamu.edu" }
+]
+requires-python = ">=3.9"
+
+dependencies = [
+    "numpy",
+    "rlgym",
+    "rlgym-tools"
+]
+
+[tool.setuptools.packages.find]
+where = ["rocket_league_rl"]
+include = ["rocket_league_rl*"]

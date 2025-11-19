@@ -5,7 +5,6 @@ from rlgym.api import RewardFunction, AgentID
 from rlgym.rocket_league.api import GameState
 from rlgym.rocket_league.common_values import BALL_MAX_SPEED
 
-
 class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
     def __init__(self, touch_reward: float = 1.0, acceleration_reward: float = 0.0, use_touch_count: bool = True):
         self.touch_reward = touch_reward
@@ -34,3 +33,33 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
         self.prev_ball = ball
 
         return rewards
+    
+    
+class TouchScaler(RewardFunction[AgentID, GameState, float]):
+    def __init__(self, base_reward_fn):
+        self.base = base_reward_fn
+        self.last_touches = {}
+
+    def reset(self, agents, initial_state, shared_info):
+        self.base.reset(agents, initial_state, shared_info)
+        self.last_touches = {agent: 0 for agent in agents}
+
+    def get_rewards(self, agents, state, is_terminated, is_truncated, shared_info):
+        base_rewards = self.base.get_rewards(agents, state, is_terminated, is_truncated, shared_info)
+        scaled = {}
+
+        for agent in agents:
+            touches = state.cars[agent].ball_touches
+            last = self.last_touches[agent]
+
+            if touches > last:
+                if touches == 1:
+                    scaled[agent] = 8.0  # first touch
+                else:
+                    scaled[agent] = 4.0  # subsequent touches
+            else:
+                scaled[agent] = 0.0
+
+            self.last_touches[agent] = touches
+
+        return scaled
