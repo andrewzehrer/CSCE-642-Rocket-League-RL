@@ -9,7 +9,8 @@ def build_rlgym_v2_env():
     from rlgym.rocket_league import common_values
     from rlgym_ppo.util import RLGymV2GymWrapper
 
-    from rocket_league_rl.rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward, TouchScaler
+    # Custom reward logic
+    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
 
     import numpy as np
     
@@ -27,26 +28,34 @@ def build_rlgym_v2_env():
     termination_condition = GoalCondition()
     truncation_condition = AnyCondition(NoTouchTimeoutCondition(timeout_seconds=no_touch_timeout_seconds), TimeoutCondition(timeout_seconds=game_timeout_seconds))
 
-    # Define reward function
+    # Reward example
     reward_fn = CombinedReward((GoalReward(), 10), (TouchReward(), 0.1))
+    
+    # Actual reward
     one_v_zero_reward_fn = CombinedReward(
         # (Action, Reward)
-        (TouchScaler(AdvancedTouchReward(touch_reward=1.0)), 1.0), # +8 First touch in the episode, +4 subsequent touches 
-        (), # +5 Good touch (ball speed inc towards opp goal)
+        (AdvancedTouchReward(touch_reward=1.0), 1.0), # +8 First touch in the episode, +4 subsequent touches, +5 Good touch (ball speed inc towards opp goal)
         (), # +1 Pick up boost
         (), # +0.1 Using boost
         (), # -0.01 Time penalty
     )
     
-    obs_builder = DefaultObs(zero_padding=None,
-                             pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
-                             ang_coef=1 / np.pi,
-                             lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
-                             ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
-                             boost_coef=1 / 100.0,)
+    obs_builder = DefaultObs(
+        zero_padding=None,
+        pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
+        ang_coef=1 / np.pi,
+        lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
+        ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
+        boost_coef=1 / 100.0
+    )
 
-    state_mutator = MutatorSequence(FixedTeamSizeMutator(blue_size=blue_team_size, orange_size=orange_team_size),
-                                    KickoffMutator())
+    state_mutator = MutatorSequence(
+        FixedTeamSizeMutator(
+            blue_size=blue_team_size,
+            orange_size=orange_team_size
+        ), KickoffMutator()
+    )
+
     rlgym_env = RLGym(
         state_mutator=state_mutator,
         obs_builder=obs_builder,
@@ -54,7 +63,8 @@ def build_rlgym_v2_env():
         reward_fn=reward_fn,
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
-        transition_engine=RocketSimEngine())
+        transition_engine=RocketSimEngine()
+    )
 
     return RLGymV2GymWrapper(rlgym_env)
 
@@ -67,23 +77,26 @@ if __name__ == "__main__":
     # educated guess - could be slightly higher or lower
     min_inference_size = max(1, int(round(n_proc * 0.9)))
 
-    learner = Learner(build_rlgym_v2_env,
-                      n_proc=n_proc,
-                      min_inference_size=min_inference_size,
-                      metrics_logger=None,
-                      ppo_batch_size=50000, # batch size - set this number to as large as your GPU can handle
-                      policy_layer_sizes=[512, 512], # policy network
-                      critic_layer_sizes=[512, 512], # value network
-                      ts_per_iteration=50000, # timesteps per training iteration - set this equal to the batch size
-                      exp_buffer_size=150000, # size of experience buffer - keep this 2 - 3x the batch size
-                      ppo_minibatch_size=50000, # minibatch size - set this less than or equal to the batch size
-                      ppo_ent_coef=0.01, # entropy coefficient - this determines the impact of exploration on the policy
-                      policy_lr=5e-5, # policy learning rate
-                      critic_lr=5e-5, # value function learning rate
-                      ppo_epochs=1,   # number of PPO epochs
-                      standardize_returns=True,
-                      standardize_obs=False,
-                      save_every_ts=1_000_000, # save every 1M steps
-                      timestep_limit=1_000_000_000, # Train for 1B steps
-                      log_to_wandb=True)
+    learner = Learner(
+        build_rlgym_v2_env,
+        n_proc=n_proc,
+        min_inference_size=min_inference_size,
+        metrics_logger=None,
+        ppo_batch_size=50000, # batch size - set this number to as large as your GPU can handle
+        policy_layer_sizes=[512, 512], # policy network
+        critic_layer_sizes=[512, 512], # value network
+        ts_per_iteration=50000, # timesteps per training iteration - set this equal to the batch size
+        exp_buffer_size=150000, # size of experience buffer - keep this 2 - 3x the batch size
+        ppo_minibatch_size=50000, # minibatch size - set this less than or equal to the batch size
+        ppo_ent_coef=0.01, # entropy coefficient - this determines the impact of exploration on the policy
+        policy_lr=5e-5, # policy learning rate
+        critic_lr=5e-5, # value function learning rate
+        ppo_epochs=1,   # number of PPO epochs
+        standardize_returns=True,
+        standardize_obs=False,
+        save_every_ts=1_000_000, # save every 1M steps
+        timestep_limit=1_000_000_000, # Train for 1B steps
+        log_to_wandb=True
+    )
+
     learner.learn()
