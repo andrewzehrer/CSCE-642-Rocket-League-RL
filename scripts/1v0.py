@@ -23,22 +23,30 @@ def build_rlgym_v2_env():
 
     action_parser = RepeatAction(LookupTableAction(), repeats=action_repeat)
     termination_condition = GoalCondition()
-    truncation_condition = AnyCondition(NoTouchTimeoutCondition(timeout_seconds=no_touch_timeout_seconds), TimeoutCondition(timeout_seconds=game_timeout_seconds))
+    truncation_condition = AnyCondition(
+        NoTouchTimeoutCondition(timeout_seconds=no_touch_timeout_seconds), 
+        TimeoutCondition(timeout_seconds=game_timeout_seconds)
+    )
 
     reward_fn = CombinedReward(
         AdvancedTouchReward(touch_reward=1.0, good_touch_reward=2.0, acceleration_reward=0.0),
         BoostChangeReward(gain_weight=0.5, lose_weight=-0.1)
     )
 
-    obs_builder = DefaultObs(zero_padding=None,
-                             pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
-                             ang_coef=1 / np.pi,
-                             lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
-                             ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
-                             boost_coef=1 / 100.0,)
+    obs_builder = DefaultObs(
+        zero_padding=None,
+        pos_coef=np.asarray([1 / common_values.SIDE_WALL_X, 1 / common_values.BACK_NET_Y, 1 / common_values.CEILING_Z]),
+        ang_coef=1 / np.pi,
+        lin_vel_coef=1 / common_values.CAR_MAX_SPEED,
+        ang_vel_coef=1 / common_values.CAR_MAX_ANG_VEL,
+        boost_coef=1 / 100.0
+    )
 
-    state_mutator = MutatorSequence(FixedTeamSizeMutator(blue_size=blue_team_size, orange_size=orange_team_size),
-                                    KickoffMutator())
+    state_mutator = MutatorSequence(
+        FixedTeamSizeMutator(blue_size=blue_team_size, orange_size=orange_team_size),
+        KickoffMutator()
+    )
+    
     rlgym_env = RLGym(
         state_mutator=state_mutator,
         obs_builder=obs_builder,
@@ -46,7 +54,8 @@ def build_rlgym_v2_env():
         reward_fn=reward_fn,
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
-        transition_engine=RocketSimEngine())
+        transition_engine=RocketSimEngine()
+    )
     
     print(rlgym_env.observation_space)
 
