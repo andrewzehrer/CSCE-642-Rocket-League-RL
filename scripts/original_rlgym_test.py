@@ -7,7 +7,7 @@ def build_rlgym_v2_env():
     from rlgym.rocket_league.sim import RocketSimEngine
     from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
     from rlgym.rocket_league import common_values
-    from rlgym_ppo.util import RLGymV2GymWrapper
+    from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
     import numpy as np
 
     spawn_opponents = True
@@ -45,7 +45,7 @@ def build_rlgym_v2_env():
     return RLGymV2GymWrapper(rlgym_env)
 
 if __name__ == "__main__":
-    from rlgym_ppo import Learner
+    from rocket_league_rl.rlgym_ppo import Learner
 
     # 8 processes
     n_proc = 8

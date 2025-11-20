@@ -1,18 +1,21 @@
+from rlgym.api import RLGym
+from rlgym.rocket_league.action_parsers import LookupTableAction, RepeatAction
+from rlgym.rocket_league.done_conditions import GoalCondition, NoTouchTimeoutCondition, TimeoutCondition, AnyCondition
+from rlgym.rocket_league.obs_builders import DefaultObs
+from rlgym.rocket_league.reward_functions import CombinedReward
+from rlgym.rocket_league.sim import RocketSimEngine
+from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
+from rlgym.rocket_league import common_values
+from rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
+import numpy as np
+
+# Modified classes
+from rocket_league_rl.rlgym_ppo import Learner
+from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
+from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
+from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.ball_travel_reward import BallTravelReward
+
 def build_rlgym_v2_env():
-    from rlgym.api import RLGym
-    from rlgym.rocket_league.action_parsers import LookupTableAction, RepeatAction
-    from rlgym.rocket_league.done_conditions import GoalCondition, NoTouchTimeoutCondition, TimeoutCondition, AnyCondition
-    from rlgym.rocket_league.obs_builders import DefaultObs
-    from rlgym.rocket_league.reward_functions import CombinedReward, GoalReward, TouchReward
-    from rlgym.rocket_league.sim import RocketSimEngine
-    from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
-    from rlgym.rocket_league import common_values
-    from rlgym_ppo.util import RLGymV2GymWrapper
-    import numpy as np
-
-    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
-    from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.boost_change_reward import BoostChangeReward
-
     spawn_opponents = False
     team_size = 1
     blue_team_size = team_size
@@ -29,8 +32,8 @@ def build_rlgym_v2_env():
     )
 
     reward_fn = CombinedReward(
-        AdvancedTouchReward(touch_reward=1.0, good_touch_reward=2.0, acceleration_reward=0.0),
-        BoostChangeReward(gain_weight=0.5, lose_weight=-0.1)
+        (AdvancedTouchReward(), 10.0),
+        (BallTravelReward(), 1.0)
     )
 
     obs_builder = DefaultObs(
@@ -46,6 +49,8 @@ def build_rlgym_v2_env():
         FixedTeamSizeMutator(blue_size=blue_team_size, orange_size=orange_team_size),
         KickoffMutator()
     )
+
+    renderer = RLViserRenderer()
     
     rlgym_env = RLGym(
         state_mutator=state_mutator,
@@ -54,15 +59,14 @@ def build_rlgym_v2_env():
         reward_fn=reward_fn,
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
-        transition_engine=RocketSimEngine()
+        transition_engine=RocketSimEngine(),
+        renderer=renderer
     )
     
     return RLGymV2GymWrapper(rlgym_env)
 
 if __name__ == "__main__":
-    from rlgym_ppo import Learner
-
-    # 8 processes
+    
     n_proc = 8
 
     # educated guess - could be slightly higher or lower
@@ -70,10 +74,12 @@ if __name__ == "__main__":
 
     learner = Learner(
         build_rlgym_v2_env,
-        wandb_run_name="learn_to_hit_ball",
+        wandb_run_name="learning_to_hit_ball",
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=None,
+        render=True,
+        render_last_only=True,
         ppo_batch_size=50000, # batch size - set this number to as large as your GPU can handle
         policy_layer_sizes=[512, 512], # policy network
         critic_layer_sizes=[512, 512], # value network
@@ -86,9 +92,9 @@ if __name__ == "__main__":
         ppo_epochs=1,   # number of PPO epochs
         standardize_returns=True,
         standardize_obs=False,
-        save_every_ts=200_000, # save every 200K steps
-        timestep_limit=2_000_000, # Train for 2M steps
-        log_to_wandb=True
+        save_every_ts=50_000, # save every 50K steps
+        timestep_limit=300_000, # Train for 100K steps
+        log_to_wandb=False
     )
 
     learner.learn()

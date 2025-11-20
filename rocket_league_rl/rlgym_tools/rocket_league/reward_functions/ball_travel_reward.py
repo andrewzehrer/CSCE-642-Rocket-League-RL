@@ -7,12 +7,18 @@ from rlgym.rocket_league.common_values import BACK_WALL_Y, CEILING_Z
 
 
 class BallTravelReward(RewardFunction[AgentID, GameState, float]):
-    def __init__(self, consecutive_weight=1.0,
-                 pass_weight=1.0, receive_weight=1.0,
-                 giveaway_weight=-1.0, intercept_weight=1.0,
-                 goal_weight=1.0,
-                 distance_normalization=None,
-                 do_integral=False):
+    def __init__(
+            self, 
+            consecutive_weight=1.0,
+            pass_weight=1.0, 
+            receive_weight=1.0,
+            giveaway_weight=-1.0, 
+            intercept_weight=1.0,
+            goal_weight=1.0,
+            distance_normalization=None,
+            do_integral=False
+        ):
+
         """
         Reward function based on the distance the ball travels between touches.
 
@@ -26,6 +32,7 @@ class BallTravelReward(RewardFunction[AgentID, GameState, float]):
                                        Defaults to weighting a distance of the full length of the field as 1.0
         :param do_integral: Whether to calculate the area under the ball's travel curve instead of the distance.
         """
+
         self.consecutive_weight = consecutive_weight
         self.pass_weight = pass_weight
         self.receive_weight = receive_weight
@@ -40,6 +47,7 @@ class BallTravelReward(RewardFunction[AgentID, GameState, float]):
             else:
                 # Use the full length of the field
                 distance_normalization = 1 / (2 * BACK_WALL_Y)
+
         self.normalization_factor = distance_normalization
         self.do_integral = do_integral
 
@@ -52,8 +60,15 @@ class BallTravelReward(RewardFunction[AgentID, GameState, float]):
         self.last_touch_agent = None
         self.distance_since_touch = 0
 
-    def get_rewards(self, agents: List[AgentID], state: GameState, is_terminated: Dict[AgentID, bool],
-                    is_truncated: Dict[AgentID, bool], shared_info: Dict[str, Any]) -> Dict[AgentID, float]:
+    def get_rewards(
+            self, 
+            agents: List[AgentID], 
+            state: GameState, 
+            is_terminated: Dict[AgentID, bool],
+            is_truncated: Dict[AgentID, bool], 
+            shared_info: Dict[str, Any]
+        ) -> Dict[AgentID, float]:
+
         ball_pos = state.ball.position
 
         # Update the distance travelled by the ball
@@ -105,8 +120,10 @@ class BallTravelReward(RewardFunction[AgentID, GameState, float]):
                 for agent in agents:
                     rewards[agent] /= len(touching_agents)
                 # and set last touch to be the one that is closest to the ball
-                closest_agent = min(touching_agents,
-                                    key=lambda x: np.linalg.norm(state.cars[x].physics.position - ball_pos))
+                closest_agent = min(
+                    touching_agents,
+                    key=lambda x: np.linalg.norm(state.cars[x].physics.position - ball_pos)
+                )
                 self.last_touch_agent = closest_agent
 
         shared_info["last_touch_agent"] = self.last_touch_agent

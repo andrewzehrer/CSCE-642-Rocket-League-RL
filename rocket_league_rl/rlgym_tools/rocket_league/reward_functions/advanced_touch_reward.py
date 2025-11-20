@@ -15,7 +15,7 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
 
     def __init__(
             self, 
-            touch_reward: float = 1.0, 
+            touch_reward: float = 4.0, 
             acceleration_reward: float = 0.0, 
             good_touch_reward: float = 5.0, 
             use_touch_count: bool = True, 
@@ -69,9 +69,9 @@ class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
             if touches > last_touch_count and (self.frame - last_touch_frame) >= self.cooldown_seconds * self.tick_rate:
                 # Touch reward
                 if touches == 1:
-                    rewards[agent] += 8.0
+                    rewards[agent] += (2 * self.touch_reward)
                 else:
-                    rewards[agent] += 4.0
+                    rewards[agent] += self.touch_reward
 
                 # Good touch reward
                 if car.team_num == 0:
