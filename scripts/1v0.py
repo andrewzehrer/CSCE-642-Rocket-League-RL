@@ -57,8 +57,6 @@ def build_rlgym_v2_env():
         transition_engine=RocketSimEngine()
     )
     
-    print(rlgym_env.observation_space)
-
     return RLGymV2GymWrapper(rlgym_env)
 
 if __name__ == "__main__":
@@ -73,7 +71,6 @@ if __name__ == "__main__":
     learner = Learner(
         build_rlgym_v2_env,
         wandb_run_name="learn_to_hit_ball",
-        checkpoint_load_folder=None,
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=None,
@@ -91,5 +88,7 @@ if __name__ == "__main__":
         standardize_obs=False,
         save_every_ts=200_000, # save every 200K steps
         timestep_limit=2_000_000, # Train for 2M steps
-        log_to_wandb=True)
+        log_to_wandb=True
+    )
+
     learner.learn()
