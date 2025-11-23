@@ -5,7 +5,7 @@ import numpy as np
 from dataclasses import dataclass
 from typing import Dict, Generic, Optional
 
-from rlgym.api import AgentID
+from rocket_league_rl.rlgym.api import AgentID
 from .car import Car
 from .game_config import GameConfig
 from .physics_object import PhysicsObject
