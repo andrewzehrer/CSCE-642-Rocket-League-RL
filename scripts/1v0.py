@@ -1,12 +1,12 @@
-from rlgym.api import RLGym
-from rlgym.rocket_league.action_parsers import LookupTableAction, RepeatAction
-from rlgym.rocket_league.done_conditions import GoalCondition, NoTouchTimeoutCondition, TimeoutCondition, AnyCondition
-from rlgym.rocket_league.obs_builders import DefaultObs
-from rlgym.rocket_league.reward_functions import CombinedReward
-from rlgym.rocket_league.sim import RocketSimEngine
-from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
-from rlgym.rocket_league import common_values
-from rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
+from rocket_league_rl.rlgym.api import RLGym
+from rocket_league_rl.rlgym.rocket_league.action_parsers import LookupTableAction, RepeatAction
+from rocket_league_rl.rlgym.rocket_league.done_conditions import GoalCondition, NoTouchTimeoutCondition, TimeoutCondition, AnyCondition
+from rocket_league_rl.rlgym.rocket_league.obs_builders import DefaultObs
+from rocket_league_rl.rlgym.rocket_league.reward_functions import CombinedReward
+from rocket_league_rl.rlgym.rocket_league.sim import RocketSimEngine
+from rocket_league_rl.rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator, KickoffMutator
+from rocket_league_rl.rlgym.rocket_league import common_values
+from rocket_league_rl.rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 import numpy as np
 
 # Modified classes
