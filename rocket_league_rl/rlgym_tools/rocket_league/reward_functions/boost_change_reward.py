@@ -1,8 +1,8 @@
 import math
 from typing import List, Dict, Any, Callable
 
-from rlgym.api import RewardFunction, AgentID, StateType, RewardType
-from rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.api import RewardFunction, AgentID, StateType, RewardType
+from rocket_league_rl.rlgym.rocket_league.api import GameState
 
 
 class BoostChangeReward(RewardFunction[AgentID, GameState, float]):

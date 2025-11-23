@@ -6,7 +6,7 @@ from rocket_league_rl.rlgym.rocket_league.api import GameState
 
 class GoalReward(RewardFunction[AgentID, GameState, float]):
     """
-    A RewardFunction that gives a reward of 1 if the agent's team scored a goal, -1 if the opposing team scored a goal,
+    A RewardFunction that gives a reward of 1 if the agent's team scored a goal, -1 if the opposing team scored a goal
     """
 
     def reset(self, agents: List[AgentID], initial_state: GameState, shared_info: Dict[str, Any]) -> None:

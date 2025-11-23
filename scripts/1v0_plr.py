@@ -13,11 +13,10 @@ from rocket_league_rl.rlgym.rocket_league.sim import RocketSimEngine
 from rocket_league_rl.rlgym.rocket_league.common_values import *
 from rocket_league_rl.rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator
 # from rocket_league_rl.rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
-from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
 
-# Rewards
-from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_reward import AdvancedTouchReward
-from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.velocity_player_to_ball_reward import VelocityPlayerToBallReward
+from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
+from rocket_league_rl.rlgym.rocket_league.reward_functions import *
+from rocket_league_rl.rlgym_tools.rocket_league.reward_functions import *
 
 # PLR Imports
 from scripts.plr_utils import PLRMutator, PLRObsBuilder
@@ -25,6 +24,7 @@ from scripts.plr_learner import PLRLearner
 
 def build_rlgym_v2_env():
     spawn_cars = FixedTeamSizeMutator(blue_size=1, orange_size=0)
+
     # Replay_prob decides how frequently the hard scenarios are sampled
     apply_physics = PLRMutator(replay_prob=0.0)
     
@@ -43,8 +43,9 @@ def build_rlgym_v2_env():
     
     # --- REWARDS ---
     reward_fn = CombinedReward(
-        (AdvancedTouchReward(acceleration_reward=0.0), 15.0),
-        (VelocityPlayerToBallReward(), 0.01) 
+        (AdvancedTouchReward(acceleration_reward=0.1), 10.0),
+        (BallTravelReward(), 0.5),
+        (GoalReward(), 30.0)
     )
     
     # --- TERMINATION ---
@@ -73,11 +74,11 @@ if __name__ == "__main__":
 
     learner = PLRLearner(
         build_rlgym_v2_env,
-        wandb_run_name="Baseline_PLR",
+        wandb_run_name="Phase_01_with_baseline_PLR",
         n_proc=n_proc,
         min_inference_size=min_inference_size,
         metrics_logger=None,
-        render=True,
+        render=False,
         render_last_only=False, 
         ppo_batch_size=50000,
         ts_per_iteration=50000,
