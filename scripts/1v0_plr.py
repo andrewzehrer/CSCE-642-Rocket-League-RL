@@ -12,7 +12,7 @@ from rocket_league_rl.rlgym.rocket_league.reward_functions import CombinedReward
 from rocket_league_rl.rlgym.rocket_league.sim import RocketSimEngine
 from rocket_league_rl.rlgym.rocket_league.common_values import *
 from rocket_league_rl.rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator
-from rocket_league_rl.rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
+# from rocket_league_rl.rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
 
 # Rewards
@@ -62,7 +62,7 @@ def build_rlgym_v2_env():
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
         transition_engine=RocketSimEngine(),
-        renderer=RLViserRenderer()
+        #renderer=RLViserRenderer()
     )
     
     return RLGymV2GymWrapper(rlgym_env)
