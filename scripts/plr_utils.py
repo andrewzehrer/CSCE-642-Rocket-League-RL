@@ -4,10 +4,11 @@ import json
 import time
 from dataclasses import dataclass
 from typing import Dict, Any, List
-from rlgym.api import StateMutator, ObsBuilder
-from rlgym.rocket_league.api import GameState
-from rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, BALL_RADIUS
-from rlgym.rocket_league.state_mutators import KickoffMutator
+
+from rocket_league_rl.rlgym.api import StateMutator, ObsBuilder
+from rocket_league_rl.rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, BALL_RADIUS
+from rocket_league_rl.rlgym.rocket_league.state_mutators import KickoffMutator
 
 # To keep track of the scores
 PLR_FILE = "plr_state.json"

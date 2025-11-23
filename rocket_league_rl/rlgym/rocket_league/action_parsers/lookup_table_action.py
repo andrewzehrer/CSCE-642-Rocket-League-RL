@@ -2,8 +2,8 @@ from typing import Dict, Any, Tuple, List
 
 import numpy as np
 
-from rlgym.api import ActionParser, AgentID
-from rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.api import ActionParser, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import GameState
 
 
 class LookupTableAction(ActionParser[AgentID, np.ndarray, np.ndarray, GameState, Tuple[str, int]]):

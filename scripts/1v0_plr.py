@@ -10,7 +10,7 @@ from rocket_league_rl.rlgym.rocket_league.done_conditions import GoalCondition, 
 from rocket_league_rl.rlgym.rocket_league.obs_builders import DefaultObs
 from rocket_league_rl.rlgym.rocket_league.reward_functions import CombinedReward
 from rocket_league_rl.rlgym.rocket_league.sim import RocketSimEngine
-from rocket_league_rl.rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, CAR_MAX_SPEED, CAR_MAX_ANG_VEL
+from rocket_league_rl.rlgym.rocket_league.common_values import *
 from rocket_league_rl.rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator
 from rocket_league_rl.rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper

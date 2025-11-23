@@ -3,9 +3,9 @@ from typing import Any, Dict, List
 
 import RocketSim as rsim
 import numpy as np
-from rlgym.api import TransitionEngine, AgentID
-from rlgym.rocket_league.api import Car, GameConfig, GameState, PhysicsObject
-from rlgym.rocket_league.common_values import BOOST_CONSUMPTION_RATE, GRAVITY, GOAL_THRESHOLD
+from rocket_league_rl.rlgym.api import TransitionEngine, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import Car, GameConfig, GameState, PhysicsObject
+from rocket_league_rl.rlgym.rocket_league.common_values import BOOST_CONSUMPTION_RATE, GRAVITY, GOAL_THRESHOLD
 
 
 class RocketSimEngine(TransitionEngine[AgentID, GameState, np.ndarray]):

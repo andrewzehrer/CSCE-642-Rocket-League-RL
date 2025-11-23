@@ -3,9 +3,9 @@ from typing import List, Dict, Any, Tuple
 
 import numpy as np
 
-from rlgym.api import ObsBuilder, AgentID
-from rlgym.rocket_league.api import Car, GameState
-from rlgym.rocket_league.common_values import ORANGE_TEAM
+from rocket_league_rl.rlgym.api import ObsBuilder, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import Car, GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import ORANGE_TEAM
 
 
 class DefaultObs(ObsBuilder[AgentID, np.ndarray, GameState, Tuple[str, int]]):

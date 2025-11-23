@@ -2,9 +2,9 @@ from typing import Dict, Any
 
 import numpy as np
 
-from rlgym.api import StateMutator
-from rlgym.rocket_league.api import Car, GameState, PhysicsObject
-from rlgym.rocket_league.common_values import BLUE_TEAM, OCTANE, ORANGE_TEAM
+from rocket_league_rl.rlgym.api import StateMutator
+from rocket_league_rl.rlgym.rocket_league.api import Car, GameState, PhysicsObject
+from rocket_league_rl.rlgym.rocket_league.common_values import BLUE_TEAM, OCTANE, ORANGE_TEAM
 
 
 class FixedTeamSizeMutator(StateMutator[GameState]):

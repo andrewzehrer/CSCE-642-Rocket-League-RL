@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from rlgym.api import StateMutator, StateType
+from rocket_league_rl.rlgym.api import StateMutator, StateType
 
 
 class MutatorSequence(StateMutator[StateType]):

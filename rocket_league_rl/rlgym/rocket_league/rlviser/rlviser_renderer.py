@@ -3,9 +3,9 @@ from typing import Any, Dict
 import rlviser_py as rlviser
 import RocketSim as rsim
 
-from rlgym.api import Renderer
-from rlgym.rocket_league.api import Car, GameState
-from rlgym.rocket_league.common_values import BOOST_LOCATIONS
+from rocket_league_rl.rlgym.api import Renderer
+from rocket_league_rl.rlgym.rocket_league.api import Car, GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import BOOST_LOCATIONS
 
 
 class RLViserRenderer(Renderer[GameState]):

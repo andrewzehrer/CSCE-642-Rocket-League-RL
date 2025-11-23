@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 
-from rlgym.api import DoneCondition, AgentID
-from rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.api import DoneCondition, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import GameState
 
 
 class GoalCondition(DoneCondition[AgentID, GameState]):

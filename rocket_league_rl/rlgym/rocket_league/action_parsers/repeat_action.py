@@ -2,7 +2,7 @@ from typing import Dict, Any, List
 
 import numpy as np
 
-from rlgym.api import ActionParser, ActionType, StateType, ActionSpaceType, AgentID
+from rocket_league_rl.rlgym.api import ActionParser, ActionType, StateType, ActionSpaceType, AgentID
 
 
 class RepeatAction(ActionParser[AgentID, ActionType, np.ndarray, StateType, ActionSpaceType]):
