@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, Generic, Tuple
 
 import numpy as np
-from rlgym.api import AgentID
+from rocket_league_rl.rlgym.api import AgentID
 
 from .physics_object import PhysicsObject
 from .utils import create_default_init
