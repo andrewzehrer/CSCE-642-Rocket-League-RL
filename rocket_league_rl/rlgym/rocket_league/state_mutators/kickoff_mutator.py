@@ -3,9 +3,9 @@ from typing import Dict, Any
 
 import numpy as np
 
-from rlgym.api import StateMutator
-from rlgym.rocket_league.api import GameState
-from rlgym.rocket_league.common_values import BLUE_TEAM, BALL_RESTING_HEIGHT
+from rocket_league_rl.rlgym.api import StateMutator
+from rocket_league_rl.rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import BLUE_TEAM, BALL_RESTING_HEIGHT
 
 
 class KickoffMutator(StateMutator[GameState]):
