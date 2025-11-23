@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-import rlviser_py as rlviser
+import rocket_league_rl.rlviser_py as rlviser
 import RocketSim as rsim
 
 from rocket_league_rl.rlgym.api import Renderer
