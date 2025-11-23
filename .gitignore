@@ -1,7 +1,6 @@
 /wandb
 /scripts/__pycache__
 /rocket_league_rl/rlgym_tools/rocket_league/reward_functions/__pycache__
-/data/checkpoints
 /rocket_league_rl/rlgym_ppo/batched_agents/__pycache__
 /rocket_league_rl/rlgym_ppo/__pycache__
 /rocket_league_rl/rlgym_ppo/ppo/__pycache__
@@ -9,3 +8,4 @@
 /rocket_league_rl/rlgym_tools/rocket_league/reward_functions/__pycache__
 rlviser.exe
 settings.txt
+/venv

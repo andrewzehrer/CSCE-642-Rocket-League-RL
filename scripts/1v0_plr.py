@@ -20,8 +20,8 @@ from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.advanced_touch_
 from rocket_league_rl.rlgym_tools.rocket_league.reward_functions.velocity_player_to_ball_reward import VelocityPlayerToBallReward
 
 # PLR Imports
-from plr_utils import PLRMutator, PLRObsBuilder
-from plr_learner import PLRLearner
+from scripts.plr_utils import PLRMutator, PLRObsBuilder
+from scripts.plr_learner import PLRLearner
 
 def build_rlgym_v2_env():
     spawn_cars = FixedTeamSizeMutator(blue_size=1, orange_size=0)
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         ppo_epochs=1,
         standardize_returns=True,
         standardize_obs=False,
-        save_every_ts=50_000,
+        save_every_ts=100_000,
         timestep_limit=2_000_000,
         log_to_wandb=True
     )
