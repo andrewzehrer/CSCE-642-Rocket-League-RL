@@ -92,8 +92,8 @@ if __name__ == "__main__":
         ppo_epochs=1,
         standardize_returns=True,
         standardize_obs=False,
-        save_every_ts=100_000,
-        timestep_limit=2_000_000,
+        save_every_ts=10_000_000,
+        timestep_limit=1_000_000_000,
         log_to_wandb=True
     )
 
