@@ -1,7 +1,7 @@
 from typing import List
 
 import numpy as np
-from rlgym.rocket_league.api import PhysicsObject
+from rocket_league_rl.rlgym.rocket_league.api import PhysicsObject
 
 
 def relative_physics(origin: PhysicsObject, targets: List[PhysicsObject]) -> List[PhysicsObject]:

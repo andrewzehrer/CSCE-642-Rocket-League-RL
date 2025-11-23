@@ -1,5 +1,5 @@
 import numpy as np
-from rlgym.rocket_league.common_values import CAR_MAX_ANG_VEL, TICKS_PER_SECOND
+from rocket_league_rl.rlgym.rocket_league.common_values import CAR_MAX_ANG_VEL, TICKS_PER_SECOND
 
 # Code by the legendary Sam Mish, from https://www.smish.dev/rocket_league/inverse_aerial_control/
 # NOTE: Modified to produce full-magnitude inputs when at max angvel (thanks Zealan)

@@ -1,7 +1,7 @@
 import math
 
 import numpy as np
-from rlgym.rocket_league.common_values import BACK_WALL_Y, SIDE_WALL_X, GOAL_HEIGHT
+from rocket_league_rl.rlgym.rocket_league.common_values import BACK_WALL_Y, SIDE_WALL_X, GOAL_HEIGHT
 
 try:
     from scipy.stats.distributions import skellam

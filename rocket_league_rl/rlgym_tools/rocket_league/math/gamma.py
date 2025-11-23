@@ -1,6 +1,6 @@
 import math
 
-from rlgym.rocket_league.common_values import TICKS_PER_SECOND
+from rocket_league_rl.rlgym.rocket_league.common_values import TICKS_PER_SECOND
 
 
 # Utility functions for converting between gamma, half-life, and horizon.
