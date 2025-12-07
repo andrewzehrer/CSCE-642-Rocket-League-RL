@@ -428,7 +428,7 @@ class Learner(object):
         # checkpoints
         print(f"Saving checkpoint {cumulative_timesteps}...")
         existing_checkpoints = [
-            int(arg) for arg in os.listdir(self.checkpoints_save_folder)
+            int(arg) for arg in os.listdir(self.checkpoints_save_folder) if arg.isdigit()
         ]
         if len(existing_checkpoints) > self.n_checkpoints_to_keep:
             existing_checkpoints.sort()

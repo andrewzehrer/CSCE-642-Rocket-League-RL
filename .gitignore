@@ -1,3 +1,7 @@
+# macOS
+.DS_Store
+
+# Logs and outputs
 /wandb
 /scripts/__pycache__
 /rocket_league_rl/rlgym_tools/rocket_league/reward_functions/__pycache__
