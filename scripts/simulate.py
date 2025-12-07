@@ -20,6 +20,7 @@ import os
 import sys
 import argparse
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rocket_league_rl'))
 
 import time
 import numpy as np

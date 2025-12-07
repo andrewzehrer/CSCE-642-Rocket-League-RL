@@ -2,6 +2,7 @@ import os
 import sys
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rocket_league_rl'))
 
 import numpy as np
 import torch
@@ -12,7 +13,6 @@ from rlgym.rocket_league.obs_builders import DefaultObs
 from rlgym.rocket_league.reward_functions import CombinedReward, GoalReward, TouchReward
 from rlgym.rocket_league.sim import RocketSimEngine
 from rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, CAR_MAX_SPEED, CAR_MAX_ANG_VEL
-from rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
 
 # Import Custom Velocity Reward
@@ -69,7 +69,7 @@ def build_phase_2_env():
         termination_cond=termination_condition,
         truncation_cond=truncation_condition,
         transition_engine=RocketSimEngine(),
-        renderer=RLViserRenderer()
+        renderer=None  # No rendering during training
     ))
 
 def load_weights_only(learner, checkpoint_path):

@@ -1,9 +1,14 @@
+import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rocket_league_rl'))
+
 import numpy as np
 import torch
 
 from rocket_league_rl.rlgym_ppo.learner import Learner
 from rocket_league_rl.rlgym_ppo.util import torch_functions
-from scripts.plr_utils import PLRBuffer
+from plr_utils import PLRBuffer
 
 class PLRLearner(Learner):
     def __init__(self, *args, **kwargs):

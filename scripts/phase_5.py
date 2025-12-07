@@ -17,6 +17,7 @@ DURATION: Continue from Phase 4, ~100-200M additional timesteps
 import os
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rocket_league_rl'))
 
 import numpy as np
 from rlgym.api import RLGym

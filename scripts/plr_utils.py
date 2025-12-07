@@ -87,8 +87,12 @@ Same 10 scenarios as Phase 4.5
 ================================================================================
 """
 
-import numpy as np
 import os
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'rocket_league_rl'))
+
+import numpy as np
 import json
 import time
 from dataclasses import dataclass
