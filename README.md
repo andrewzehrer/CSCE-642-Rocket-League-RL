@@ -38,7 +38,7 @@ This project trains an AI agent to play Rocket League using Proximal Policy Opti
 
 ```bash
 # Clone the repository
-git clone https://github.com/Yandrewzehrer/CSCE-642-Rocket-League-RL
+git clone https://github.com/andrewzehrer/CSCE-642-Rocket-League-RL
 cd CSCE-642-Rocket-League-RL
 
 # Create virtual environment
