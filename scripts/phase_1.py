@@ -30,7 +30,6 @@ from rlgym.rocket_league.obs_builders import DefaultObs
 from rlgym.rocket_league.reward_functions import CombinedReward, GoalReward
 from rlgym.rocket_league.sim import RocketSimEngine
 from rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, CAR_MAX_SPEED, CAR_MAX_ANG_VEL
-from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator
 from rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
 
@@ -48,13 +47,9 @@ def build_phase_1_env():
     """
 
     # 1. SPAWN SETUP
-    spawn_cars = FixedTeamSizeMutator(blue_size=1, orange_size=0)
-
-    # PLR Mutator - 60% prioritized sampling, 40% random
-    # This helps focus on harder scenarios while maintaining coverage
-    plr_mutator = PLRMutator(replay_prob=0.6)
-
-    state_mutator = MutatorSequence(spawn_cars, plr_mutator)
+    # PLRMutator handles spawning internally (blue_size=1, orange_size=0 by default)
+    # 60% prioritized sampling, 40% random - helps focus on harder scenarios
+    plr_mutator = PLRMutator(replay_prob=0.6, blue_size=1, orange_size=0)
 
     # 2. OBSERVATION
     # PLRObsBuilder: 72 standard dims + 1 scenario index = 73 dims
@@ -92,7 +87,7 @@ def build_phase_1_env():
 
     # 5. BUILD ENV
     rlgym_env = RLGym(
-        state_mutator=state_mutator,
+        state_mutator=plr_mutator,
         obs_builder=obs_builder,
         action_parser=RepeatAction(LookupTableAction(), repeats=8),
         reward_fn=reward_fn,

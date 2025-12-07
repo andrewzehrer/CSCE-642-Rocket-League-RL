@@ -12,7 +12,6 @@ from rlgym.rocket_league.obs_builders import DefaultObs
 from rlgym.rocket_league.reward_functions import CombinedReward, GoalReward, TouchReward
 from rlgym.rocket_league.sim import RocketSimEngine
 from rlgym.rocket_league.common_values import SIDE_WALL_X, BACK_NET_Y, CEILING_Z, CAR_MAX_SPEED, CAR_MAX_ANG_VEL
-from rlgym.rocket_league.state_mutators import MutatorSequence, FixedTeamSizeMutator
 from rlgym.rocket_league.rlviser.rlviser_renderer import RLViserRenderer
 from rocket_league_rl.rlgym_ppo.util import RLGymV2GymWrapper
 
@@ -28,10 +27,8 @@ def build_phase_2_env():
     Phase 2: THE GOAL SCORER 
     """
     # 1. SPAWN SETUP (1v0)
-    spawn_cars = FixedTeamSizeMutator(blue_size=1, orange_size=0)
-    
-    plr_mutator = PLRMutator(replay_prob=0.6) 
-    state_mutator = MutatorSequence(spawn_cars, plr_mutator)
+    # PLRMutator handles spawning internally
+    plr_mutator = PLRMutator(replay_prob=0.6, blue_size=1, orange_size=0)
 
     # 2. OBSERVATION
     base_obs = DefaultObs(
@@ -65,7 +62,7 @@ def build_phase_2_env():
     )
 
     return RLGymV2GymWrapper(RLGym(
-        state_mutator=state_mutator,
+        state_mutator=plr_mutator,
         obs_builder=obs_builder,
         action_parser=RepeatAction(LookupTableAction(), repeats=8),
         reward_fn=reward_fn,
