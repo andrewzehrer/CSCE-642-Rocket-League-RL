@@ -88,7 +88,7 @@ class Learner(object):
         # the ``checkpoints_save_folder`` path
         self.add_unix_timestamp = add_unix_timestamp
         if add_unix_timestamp:
-            checkpoints_save_folder = f"{checkpoints_save_folder}-{time.time_ns()}"
+            checkpoints_save_folder = f"{checkpoints_save_folder}-{time.time() * 1_000_000_000}" # time_ns workaround
 
         torch.manual_seed(random_seed)
         np.random.seed(random_seed)

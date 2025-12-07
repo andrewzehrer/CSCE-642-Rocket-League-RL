@@ -1,9 +1,9 @@
 from typing import Any, Dict, List
 
 import numpy as np
-from rlgym.api import RewardFunction, AgentID
-from rlgym.rocket_league.api import GameState
-from rlgym.rocket_league.common_values import BALL_MAX_SPEED
+from rocket_league_rl.rlgym.api import RewardFunction, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import BALL_MAX_SPEED
 
 class AdvancedTouchReward(RewardFunction[AgentID, GameState, float]):
     """

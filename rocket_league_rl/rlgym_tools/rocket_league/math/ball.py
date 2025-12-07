@@ -2,13 +2,10 @@ import math
 
 import numpy as np
 
-from rlgym.rocket_league.api import PhysicsObject
-from rlgym.rocket_league.common_values import TICKS_PER_SECOND, GRAVITY, BACK_WALL_Y, BALL_RADIUS, GOAL_CENTER_TO_POST, \
-    BALL_RESTING_HEIGHT, GOAL_THRESHOLD
-
+from rocket_league_rl.rlgym.rocket_league.api import PhysicsObject
+from rocket_league_rl.rlgym.rocket_league.common_values import *
 
 # Utility functions for ball physics
-
 
 def solve_parabolic_trajectory(ball: PhysicsObject, g=GRAVITY):
     # Solve for the time of impact with the ground

@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
-from rlgym.api import RewardFunction, AgentID
-from rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.api import RewardFunction, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import GameState
 
 
 class TeamSpiritRewardWrapper(RewardFunction[AgentID, GameState, float]):

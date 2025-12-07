@@ -1,11 +1,11 @@
 from typing import List, Dict, Any
 
-from rlgym.api import RewardFunction, AgentID
-from rlgym.rocket_league.api import GameState
-from rlgym.rocket_league.common_values import BLUE_TEAM
+from rocket_league_rl.rlgym.api import RewardFunction, AgentID
+from rocket_league_rl.rlgym.rocket_league.api import GameState
+from rocket_league_rl.rlgym.rocket_league.common_values import BLUE_TEAM
 
-from rlgym_tools.rocket_league.math.ball import GOAL_THRESHOLD
-from rlgym_tools.rocket_league.math.solid_angle import view_goal_ratio
+from rocket_league_rl.rlgym_tools.rocket_league.math.ball import GOAL_THRESHOLD
+from rocket_league_rl.rlgym_tools.rocket_league.math.solid_angle import view_goal_ratio
 
 
 class GoalProbReward(RewardFunction[AgentID, GameState, float]):

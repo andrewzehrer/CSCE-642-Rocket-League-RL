@@ -1,7 +1,7 @@
 import math
 
 import numpy as np
-from rlgym.rocket_league.common_values import BALL_RADIUS, GOAL_HEIGHT, GOAL_CENTER_TO_POST
+from rocket_league_rl.rlgym.rocket_league.common_values import BALL_RADIUS, GOAL_HEIGHT, GOAL_CENTER_TO_POST
 
 
 def solid_angle_eriksson(O, A, B, C):

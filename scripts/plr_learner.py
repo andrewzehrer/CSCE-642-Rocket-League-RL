@@ -1,8 +1,9 @@
 import numpy as np
 import torch
+
 from rocket_league_rl.rlgym_ppo.learner import Learner
 from rocket_league_rl.rlgym_ppo.util import torch_functions
-from plr_utils import PLRBuffer
+from scripts.plr_utils import PLRBuffer
 
 class PLRLearner(Learner):
     def __init__(self, *args, **kwargs):
