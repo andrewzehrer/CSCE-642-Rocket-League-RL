@@ -168,5 +168,7 @@ CSCE-642-Rocket-League-RL/
 
 ## Acknowledgments
 
+- [RLGym Github](https://github.com/RLGym) - Our training codebase
 - [RLGym](https://rlgym.org) - Rocket League Gym environment
 - [RLViser](https://github.com/VirxEC/rlviser) - Visualization tool
+- [Necto/Nexto](https://github.com/Rolv-Arild/Necto) - Inspiration for advanced reward logic (Liu Distance, Alignment)
