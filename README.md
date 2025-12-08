@@ -3,7 +3,7 @@
 **Course:** CSCE 642 - Deep Reinforcement Learning
 
 **Team Members:**
-- Member Name (UIN)
+- Andrew Zehrer (930005389)
 - Mrunmay Deshmukh (635009164)
 
 ## Summary
