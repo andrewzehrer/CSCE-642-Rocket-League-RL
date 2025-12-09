@@ -77,7 +77,7 @@ git clone https://github.com/andrewzehrer/CSCE-642-Rocket-League-RL
 cd CSCE-642-Rocket-League-RL
 
 # Create virtual environment
-python3 -m venv rlproj
+python -m venv rlproj
 source rlproj/bin/activate  # Linux/macOS
 # OR
 .\rlproj\Scripts\activate   # Windows
@@ -124,7 +124,7 @@ RLViser is used to visualize the trained agent. Setup differs by platform.
 ### Windows
 
 1. Download `rlviser.exe` from [RLViser Releases](https://github.com/VirxEC/rlviser/releases)
-2. Place `rlviser.exe` in the `scripts/` folder
+2. Place `rlviser.exe` in the directory's root folder
 3. Run simulation (rlviser starts automatically):
    ```bash
    python scripts/simulate.py
