@@ -10,6 +10,39 @@
 
 This project trains an AI agent to play Rocket League using Proximal Policy Optimization (PPO) combined with Prioritized Level Replay (PLR) for curriculum learning. We implement a 5-phase training curriculum that progressively teaches the agent from basic ball-touching to aerial maneuvers and competitive 1v1 self-play. The PLR algorithm automatically focuses training on scenarios where the agent struggles most, using TD-error as a difficulty metric. To prevent scenario ID dependence, we introduce task dropout (50% masking) in later phases, enabling the agent to generalize across all scenarios. Built using [RLGym](https://rlgym.org).
 
+## Project Structure
+
+```
+CSCE-642-Rocket-League-RL/
+├── README.md
+├── requirements.txt
+├── game records.xlsx              # Evaluation game results
+├── scripts/
+│   ├── phase_1.py                 # Phase 1: Touch Agent
+│   ├── phase_2.py                 # Phase 2: Goal Scorer
+│   ├── phase_2.5.py               # Phase 2.5: Goal Scorer 2.0
+│   ├── phase_3.py                 # Phase 3: Aerial Agent
+│   ├── phase_4.py                 # Phase 4: Generalist
+│   ├── phase_5.py                 # Phase 5: Self-Play 1v1
+│   ├── simulate.py                # Visualization script
+│   ├── plr_utils.py               # PLR implementation
+│   ├── plr_learner.py             # PLR-aware PPO learner
+│   └── data/checkpoints/          # Saved model checkpoints
+├── rlbot_export/                  # RLBot evaluation on actual game
+│   ├── CSCE642Bot.py              # Bot entry point
+│   ├── CSCE642Bot.cfg             # Bot configuration
+│   ├── PPO_POLICY.pt              # Exported policy weights
+│   ├── act.py                     # Action inference
+│   ├── discrete.py                # Discrete action mapping
+│   └── requirements.txt           # Bot dependencies
+└── rocket_league_rl/
+    └── rlgym_tools/               # Reward functions & utilities
+        ├── liu_distance_player_to_ball_reward.py  # Custom
+        ├── align_ball_to_goal_reward.py           # Custom
+        ├── face_ball_reward.py                    # Custom
+        └── velocity_ball_to_goal_reward.py        # Custom
+```
+
 ## Training Curriculum
 
 | Phase | Name | Goal | Timesteps |
@@ -143,31 +176,23 @@ python scripts/simulate.py --speed 0              # Max speed
 python scripts/simulate.py --checkpoint /path     # Custom checkpoint
 ```
 
-## Project Structure
+## Evaluation
 
-```
-CSCE-642-Rocket-League-RL/
-├── README.md
-├── requirements.txt
-├── scripts/
-│   ├── phase_1.py                 # Phase 1: Touch Agent
-│   ├── phase_2.py                 # Phase 2: Goal Scorer
-│   ├── phase_2.5.py               # Phase 2.5: Goal Scorer 2.0
-│   ├── phase_3.py                 # Phase 3: Aerial Agent
-│   ├── phase_4.py                 # Phase 4: Generalist
-│   ├── phase_5.py                 # Phase 5: Self-Play 1v1
-│   ├── simulate.py                # Visualization script
-│   ├── plr_utils.py               # PLR implementation
-│   ├── plr_learner.py             # PLR-aware PPO learner
-│   └── data/checkpoints/          # Saved model checkpoints
-└── rocket_league_rl/
-    ├── rlgym/                     # RLGym library
-    ├── rlgym_ppo/                 # PPO implementation
-    └── rlgym_tools/               # Custom reward functions
-```
+We evaluated our trained agent in the actual Rocket League game using [RLBot](https://github.com/RLBot/RLBot).
+
+### Running the Bot
+
+1. Follow the [RLBot setup guide](https://github.com/RLBot/RLBot) to install RLBot
+2. Copy the `rlbot_export/` folder to your RLBot bots directory
+3. Load `CSCE642Bot` in RLBot and run matches
+
+### Results
+
+Game results are recorded in `game records.xlsx`.
 
 ## Acknowledgments
 
+- [RLBot](https://github.com/RLBot/RLBot) - Framework for running bots in Rocket League
 - [RLGym Github](https://github.com/RLGym) - Our training codebase
 - [RLGym](https://rlgym.org) - Rocket League Gym environment
 - [RLViser](https://github.com/VirxEC/rlviser) - Visualization tool
