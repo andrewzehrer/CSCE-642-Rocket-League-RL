@@ -28,6 +28,7 @@ CSCE-642-Rocket-League-RL/
 │   ├── plr_utils.py               # PLR implementation
 │   ├── plr_learner.py             # PLR-aware PPO learner
 │   └── data/checkpoints/          # Saved model checkpoints
+|
 ├── rlbot_export/                  # RLBot evaluation on actual game
 │   ├── CSCE642Bot.py              # Bot entry point
 │   ├── CSCE642Bot.cfg             # Bot configuration
@@ -35,6 +36,7 @@ CSCE-642-Rocket-League-RL/
 │   ├── act.py                     # Action inference
 │   ├── discrete.py                # Discrete action mapping
 │   └── requirements.txt           # Bot dependencies
+|
 └── rocket_league_rl/
     └── rlgym_tools/               # Reward functions & utilities
         ├── liu_distance_player_to_ball_reward.py  # Custom
