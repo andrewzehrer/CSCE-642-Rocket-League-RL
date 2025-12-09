@@ -1,4 +1,4 @@
-# Project: Training a Rocket League Agent using Deep Reinforcement Learning
+# Project: Training an AI Agent in Rocket League
 
 **Course:** CSCE 642 - Deep Reinforcement Learning
 
